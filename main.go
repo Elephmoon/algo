@@ -13,7 +13,7 @@ func main() {
 	elem := rand.Intn(arrSize)
 
 	for i := 0; i < arrSize; i++ {
-		list[i] = rand.Intn(arrSize)
+		list[i] = i
 	}
 
 	startBinary := time.Now()
