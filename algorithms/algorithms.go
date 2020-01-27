@@ -1,9 +1,6 @@
 package algorithms
 
-import "sort"
-
 func BinarySearchInt(input []int, item int) (position int, found bool) {
-	sort.Ints(input)
 	low := 0
 	high := len(input) - 1
 
