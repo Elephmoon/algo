@@ -1,36 +1,37 @@
 package main
 
 import (
-	"algo/algorithms"
+	"flag"
 	"fmt"
-	"math/rand"
-	"time"
+	"github.com/Elephmoon/algo/algorithms"
+	"strconv"
+)
+
+const (
+	fibAlg = 1
+)
+
+var (
+	alg = flag.String("alg", "0", "Choose an algorithm. 1 - Fibonacci numbers")
 )
 
 func main() {
-	arrSize := 100000000
-	list := make([]int, arrSize)
-	elem := rand.Intn(arrSize)
-
-	for i := 0; i < arrSize; i++ {
-		list[i] = i
+	flag.Parse()
+	inputFlag, err := strconv.Atoi(*alg)
+	if err != nil {
+		panic(err)
 	}
-
-	startBinary := time.Now()
-	sortedPosition, found := algorithms.BinarySearchInt(list, elem)
-	fmt.Println("Binary search time = ", time.Since(startBinary))
-	if found {
-		fmt.Println(sortedPosition)
-	} else {
-		fmt.Println("Not found ", elem)
+	switch inputFlag {
+	case fibAlg:
+		fmt.Println(fibonacci())
 	}
+}
 
-	startStupid := time.Now()
-	sortedPosition, found = algorithms.StupidSearchInt(list, elem)
-	fmt.Println("Stupid search time = ", time.Since(startStupid))
-	if found {
-		fmt.Println(sortedPosition)
-	} else {
-		fmt.Println("Not found", elem)
+func fibonacci() uint32 {
+	fmt.Println("Enter number")
+	var n uint32
+	if _, err := fmt.Scanf("%d", &n); err != nil {
+		panic(err)
 	}
+	return algorithms.Fib(uint32(n))
 }
