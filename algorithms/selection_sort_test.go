@@ -21,6 +21,13 @@ func TestSelectionSort(t *testing.T) {
 			},
 			want: []int{-999, -5, 0, 1, 2, 100},
 		},
+		{
+			name: "Return [1 2 3 4]",
+			args: args{
+				input: []int{1, 2, 3, 4},
+			},
+			want: []int{1, 2, 3, 4},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
