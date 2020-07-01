@@ -30,3 +30,9 @@ func TestFib(t *testing.T) {
 		})
 	}
 }
+
+func BenchmarkFib(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Fib(uint32(n))
+	}
+}
