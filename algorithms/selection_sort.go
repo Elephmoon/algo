@@ -1,14 +1,15 @@
 package algorithms
 
 func SelectionSort(input []int) []int {
+	var n = len(input)
 	for i := range input {
-		smallest := i
-		for i2, j := range input {
-			if j < input[smallest] {
-				smallest = i2
+		var minIdx = i
+		for j := i; j < n; j++ {
+			if input[j] < input[minIdx] {
+				minIdx = j
 			}
-			input[i2], input[smallest] = input[smallest], input[i2]
 		}
+		input[i], input[minIdx] = input[minIdx], input[i]
 	}
 	return input
 }
