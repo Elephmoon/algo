@@ -1,6 +1,7 @@
 package algorithms
 
 import (
+	"math/rand"
 	"reflect"
 	"testing"
 )
@@ -27,4 +28,21 @@ func TestQuickSort(t *testing.T) {
 			}
 		})
 	}
+}
+
+func BenchmarkQuickSort(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		b.StopTimer()
+		arr := generateArray(100000)
+		b.StartTimer()
+		QuickSort(arr)
+	}
+}
+
+func generateArray(size int) []int {
+	result := make([]int, size)
+	for i := 0; i < size; i++ {
+		result = append(result, rand.Intn(1e9))
+	}
+	return result
 }
