@@ -24,7 +24,7 @@ func TestStack_Push(t *testing.T) {
 			name: "push 50",
 			fields: fields{
 				top:   2,
-				stack: make([]uint32, 2, 2),
+				stack: make([]uint32, 2),
 				size:  2,
 			},
 			args:    args{element: 50},
@@ -159,7 +159,7 @@ func TestNewStack(t *testing.T) {
 			args: args{size: 2},
 			want: &stack{
 				top:   2,
-				stack: make([]uint32, 2, 2),
+				stack: make([]uint32, 2),
 				size:  2,
 			},
 		},

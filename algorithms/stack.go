@@ -11,7 +11,7 @@ type stack struct {
 }
 
 func NewStack(size uint32) *stack {
-	internalStack := make([]uint32, size, size)
+	internalStack := make([]uint32, size)
 	return &stack{
 		top:   int(size),
 		stack: internalStack,
