@@ -7,17 +7,17 @@ import (
 
 func TestQuickSort(t *testing.T) {
 	type args struct {
-		data []int32
+		data []int
 	}
 	tests := []struct {
 		name string
 		args args
-		want []int32
+		want []int
 	}{
 		{
 			name: "get [1, 2, 3, 4, 5]",
-			args: args{data: []int32{5, 2, 1, 3, 4}},
-			want: []int32{1, 2, 3, 4, 5},
+			args: args{data: []int{5, 2, 1, 3, 4}},
+			want: []int{1, 2, 3, 4, 5},
 		},
 	}
 	for _, tt := range tests {

@@ -2,7 +2,7 @@ package algorithms
 
 import "math/rand"
 
-func QuickSort(data []int32) []int32 {
+func QuickSort(data []int) []int {
 	if len(data) < 2 {
 		return data
 	}
