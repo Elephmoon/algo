@@ -1,6 +1,9 @@
 package algorithms
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 var (
 	errNilTree = errors.New("tree is nill")
@@ -46,4 +49,13 @@ func (n *Node) Max() int {
 		return n.value
 	}
 	return n.right.Max()
+}
+
+func (n *Node) Inorder() {
+	if n == nil {
+		return
+	}
+	n.left.Inorder()
+	fmt.Println(n.value)
+	n.right.Inorder()
 }
