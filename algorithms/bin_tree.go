@@ -33,3 +33,10 @@ func (n *Node) Insert(value int) error {
 
 	return nil
 }
+
+func (n *Node) Min() int {
+	if n.left == nil {
+		return n.value
+	}
+	return n.left.Min()
+}
