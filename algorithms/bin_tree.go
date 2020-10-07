@@ -40,3 +40,10 @@ func (n *Node) Min() int {
 	}
 	return n.left.Min()
 }
+
+func (n *Node) Max() int {
+	if n.right == nil {
+		return n.value
+	}
+	return n.right.Max()
+}
