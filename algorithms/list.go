@@ -25,12 +25,25 @@ func (l *List) InsertFrontValue(item int) *List {
 	return &newItem
 }
 
-func (l *List) predItem(item int) (*List, error) {
+func (l *List) DeleteItem(item int) (*List, error) {
+	removableItem, err := l.Search(item)
+	if err != nil {
+		return nil, err
+	}
+	pred := l.predItem(item)
+	if pred == nil {
+		return removableItem.next, nil
+	}
+	pred.next = removableItem.next
+	return l, nil
+}
+
+func (l *List) predItem(item int) *List {
 	if l == nil || l.next == nil {
-		return nil, errors.New("predecessor sought on nil list")
+		return nil
 	}
 	if l.next.value == item {
-		return l, nil
+		return l
 	}
 	return l.next.predItem(item)
 }
