@@ -63,3 +63,46 @@ func TestList_Search(t *testing.T) {
 		})
 	}
 }
+
+func TestList_InsertFrontValue(t *testing.T) {
+	type fields struct {
+		value int
+		next  *List
+	}
+	type args struct {
+		item int
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   *List
+	}{
+		{
+			name: "insert 5",
+			fields: fields{
+				value: 1000,
+				next:  nil,
+			},
+			args: args{5},
+			want: &List{
+				value: 5,
+				next: &List{
+					value: 1000,
+					next:  nil,
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l := &List{
+				value: tt.fields.value,
+				next:  tt.fields.next,
+			}
+			if got := l.InsertFrontValue(tt.args.item); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("InsertFrontValue() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

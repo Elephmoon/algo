@@ -16,3 +16,11 @@ func (l *List) Search(item int) (*List, error) {
 	}
 	return l.next.Search(item)
 }
+
+func (l *List) InsertFrontValue(item int) *List {
+	newItem := List{
+		value: item,
+		next:  l,
+	}
+	return &newItem
+}
