@@ -24,3 +24,13 @@ func (l *List) InsertFrontValue(item int) *List {
 	}
 	return &newItem
 }
+
+func (l *List) predItem(item int) (*List, error) {
+	if l == nil || l.next == nil {
+		return nil, errors.New("predecessor sought on nil list")
+	}
+	if l.next.value == item {
+		return l, nil
+	}
+	return l.next.predItem(item)
+}
