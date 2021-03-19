@@ -154,13 +154,13 @@ func TestList_predItem(t *testing.T) {
 				value: tt.fields.value,
 				next:  tt.fields.next,
 			}
-			got := l.predItem(tt.args.item)
+			got := l.prevItem(tt.args.item)
 			if tt.wantErr {
-				t.Errorf("predItem() wantErr %v", tt.wantErr)
+				t.Errorf("prevItem() wantErr %v", tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("predItem() got = %v, want %v", got, tt.want)
+				t.Errorf("prevItem() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -289,6 +289,141 @@ func TestList_DeleteItem(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("DeleteItem() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestList_InsertBack(t *testing.T) {
+	type fields struct {
+		value int
+		next  *List
+	}
+	type args struct {
+		item int
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   *List
+		args   args
+	}{
+		{
+			name: "insert item back",
+			fields: fields{
+				value: 1,
+				next: &List{
+					value: 2,
+					next: &List{
+						value: 3,
+						next:  nil,
+					},
+				},
+			},
+			want: &List{
+				value: 1,
+				next: &List{
+					value: 2,
+					next: &List{
+						value: 3,
+						next: &List{
+							value: 99,
+							next:  nil,
+						},
+					},
+				},
+			},
+			args: args{item: 99},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l := &List{
+				value: tt.fields.value,
+				next:  tt.fields.next,
+			}
+			l.InsertBack(tt.args.item)
+			if !reflect.DeepEqual(l, tt.want) {
+				t.Errorf("InsertBack() got = %v, want %v", l, tt.want)
+			}
+		})
+	}
+}
+
+func TestList_FindKLastElement1(t *testing.T) {
+	type fields struct {
+		value int
+		next  *List
+	}
+	type args struct {
+		k uint
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		args   args
+		want   *List
+	}{
+		{
+			name: "returns last element",
+			fields: fields{
+				value: 1,
+				next: &List{
+					value: 2,
+					next: &List{
+						value: 3,
+						next:  nil,
+					},
+				},
+			},
+			args: args{k: 1},
+			want: &List{
+				value: 3,
+				next:  nil,
+			},
+		},
+		{
+			name: "returns 4th element",
+			fields: fields{
+				value: 1,
+				next: &List{
+					value: 2,
+					next: &List{
+						value: 3,
+						next: &List{
+							value: 4,
+							next: &List{
+								value: 5,
+								next: &List{
+									value: 6,
+									next:  nil,
+								},
+							},
+						},
+					},
+				},
+			},
+			args: args{k: 3},
+			want: &List{
+				value: 4,
+				next: &List{
+					value: 5,
+					next: &List{
+						value: 6,
+						next:  nil,
+					},
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l := &List{
+				value: tt.fields.value,
+				next:  tt.fields.next,
+			}
+			if got := l.FindKLastElement(tt.args.k); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("FindKLastElement() = %v, want %v", got, tt.want)
 			}
 		})
 	}

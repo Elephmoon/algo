@@ -25,25 +25,52 @@ func (l *List) InsertFrontValue(item int) *List {
 	return &newItem
 }
 
+func (l *List) InsertBack(item int) {
+	newItem := List{
+		value: item,
+		next:  nil,
+	}
+	for l.next != nil {
+		l = l.next
+	}
+	l.next = &newItem
+}
+
 func (l *List) DeleteItem(item int) (*List, error) {
 	removableItem, err := l.Search(item)
 	if err != nil {
 		return nil, err
 	}
-	pred := l.predItem(item)
-	if pred == nil {
+	prev := l.prevItem(item)
+	if prev == nil {
 		return removableItem.next, nil
 	}
-	pred.next = removableItem.next
+	prev.next = removableItem.next
 	return l, nil
 }
 
-func (l *List) predItem(item int) *List {
+func (l *List) FindKLastElement(k uint) *List {
+	ptr1 := l
+	ptr2 := l
+	for i := 0; uint(i) < k; i++ {
+		if ptr1 == nil {
+			return nil
+		}
+		ptr1 = ptr1.next
+	}
+	for ptr1 != nil {
+		ptr1 = ptr1.next
+		ptr2 = ptr2.next
+	}
+	return ptr2
+}
+
+func (l *List) prevItem(item int) *List {
 	if l == nil || l.next == nil {
 		return nil
 	}
 	if l.next.value == item {
 		return l
 	}
-	return l.next.predItem(item)
+	return l.next.prevItem(item)
 }
