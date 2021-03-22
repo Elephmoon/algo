@@ -69,7 +69,7 @@ func (l *List) DeleteDups() {
 	items := make(map[int]bool)
 	prev := &List{}
 	for l != nil {
-		ok, _ := items[l.value]
+		ok := items[l.value]
 		if ok {
 			prev.next = l.next
 		} else {
