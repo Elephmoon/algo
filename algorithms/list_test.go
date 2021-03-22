@@ -428,3 +428,58 @@ func TestList_FindKLastElement1(t *testing.T) {
 		})
 	}
 }
+
+func TestList_DeleteDups(t *testing.T) {
+	type fields struct {
+		value int
+		next  *List
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   *List
+	}{
+		{
+			name: "remove dups",
+			fields: fields{
+				value: 1,
+				next: &List{
+					value: 1,
+					next: &List{
+						value: 2,
+						next: &List{
+							value: 3,
+							next: &List{
+								value: 1,
+								next:  nil,
+							},
+						},
+					},
+				},
+			},
+			want: &List{
+				value: 1,
+				next: &List{
+					value: 2,
+					next: &List{
+						value: 3,
+						next:  nil,
+					},
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l := &List{
+				value: tt.fields.value,
+				next:  tt.fields.next,
+			}
+			l.DeleteDups()
+			if !reflect.DeepEqual(l, tt.want) {
+				t.Errorf("DeleteDups() got = %v, want %v", l, tt.want)
+			}
+
+		})
+	}
+}

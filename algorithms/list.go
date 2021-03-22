@@ -65,6 +65,21 @@ func (l *List) FindKLastElement(k uint) *List {
 	return ptr2
 }
 
+func (l *List) DeleteDups() {
+	items := make(map[int]bool)
+	prev := &List{}
+	for l != nil {
+		ok, _ := items[l.value]
+		if ok {
+			prev.next = l.next
+		} else {
+			items[l.value] = true
+			prev = l
+		}
+		l = l.next
+	}
+}
+
 func (l *List) prevItem(item int) *List {
 	if l == nil || l.next == nil {
 		return nil
