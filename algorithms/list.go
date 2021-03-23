@@ -80,6 +80,25 @@ func (l *List) DeleteDups() {
 	}
 }
 
+func (l *List) Partition(number int) {
+	head := l
+	tail := l
+	node := l
+	for node != nil {
+		next := node.next
+		if node.value < number {
+			node.next = head
+			head = node
+		} else {
+			tail.next = node
+			tail = node
+		}
+		node = next
+	}
+	tail.next = nil
+	l = head
+}
+
 func (l *List) prevItem(item int) *List {
 	if l == nil || l.next == nil {
 		return nil

@@ -287,7 +287,7 @@ func TestList_DeleteItem(t *testing.T) {
 				t.Errorf("DeleteItem() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, tt.want) {
+			if !reflect.DeepEqual(got, tt.want) && !tt.wantErr {
 				t.Errorf("DeleteItem() got = %v, want %v", got, tt.want)
 			}
 		})
