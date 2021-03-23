@@ -483,3 +483,136 @@ func TestList_DeleteDups(t *testing.T) {
 		})
 	}
 }
+
+func TestSumNumbers(t *testing.T) {
+	type args struct {
+		a *List
+		b *List
+	}
+	tests := []struct {
+		name string
+		args args
+		want *List
+	}{
+		{
+			name: "returns sum of 617 and 295",
+			args: args{
+				a: &List{
+					value: 7,
+					next: &List{
+						value: 1,
+						next: &List{
+							value: 6,
+							next:  nil,
+						},
+					},
+				},
+				b: &List{
+					value: 5,
+					next: &List{
+						value: 9,
+						next: &List{
+							value: 2,
+							next:  nil,
+						},
+					},
+				},
+			},
+			want: &List{
+				value: 2,
+				next: &List{
+					value: 1,
+					next: &List{
+						value: 9,
+						next:  nil,
+					},
+				},
+			},
+		},
+		{
+			name: "returns sum of 111 and 11",
+			args: args{
+				a: &List{
+					value: 1,
+					next: &List{
+						value: 1,
+						next: &List{
+							value: 1,
+							next:  nil,
+						},
+					},
+				},
+				b: &List{
+					value: 1,
+					next: &List{
+						value: 1,
+						next:  nil,
+					},
+				},
+			},
+			want: &List{
+				value: 2,
+				next: &List{
+					value: 2,
+					next: &List{
+						value: 1,
+						next:  nil,
+					},
+				},
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := SumNumbers(tt.args.a, tt.args.b); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("SumNumbers() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestList_Len(t *testing.T) {
+	type fields struct {
+		value int
+		next  *List
+	}
+	tests := []struct {
+		name   string
+		fields fields
+		want   int
+	}{
+		{
+			name: "returns 1",
+			fields: fields{
+				value: 1,
+				next:  nil,
+			},
+			want: 1,
+		},
+		{
+			name: "returns 3",
+			fields: fields{
+				value: 0,
+				next: &List{
+					value: 1,
+					next: &List{
+						value: 3,
+						next:  nil,
+					},
+				},
+			},
+			want: 3,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			l := &List{
+				value: tt.fields.value,
+				next:  tt.fields.next,
+			}
+			if got := l.Len(); got != tt.want {
+				t.Errorf("Len() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

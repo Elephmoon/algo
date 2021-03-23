@@ -99,6 +99,57 @@ func (l *List) Partition(number int) {
 	l = head
 }
 
+func (l *List) Len() int {
+	result := 0
+	for l != nil {
+		result++
+		l = l.next
+	}
+	return result
+}
+
+func SumNumbers(a, b *List) *List {
+	overflow := 0
+	var result *List
+	var resultEnd *List
+	if a.Len() > b.Len() {
+		b = addZeroes(b, a.Len()-b.Len())
+	} else {
+		a = addZeroes(a, b.Len()-a.Len())
+	}
+	for b != nil && a != nil {
+		resultVal := a.value + b.value + overflow
+		if resultVal > 10 {
+			resultVal = resultVal % 10
+			overflow = 1
+		}
+		if result == nil {
+			result = &List{
+				value: resultVal,
+				next:  nil,
+			}
+			resultEnd = result
+		} else {
+			resultEnd.next = &List{
+				value: resultVal,
+				next:  nil,
+			}
+			resultEnd = resultEnd.next
+		}
+		a = a.next
+		b = b.next
+	}
+
+	return result
+}
+
+func addZeroes(list *List, count int) *List {
+	for i := 0; i < count; i++ {
+		list.InsertBack(0)
+	}
+	return list
+}
+
 func (l *List) prevItem(item int) *List {
 	if l == nil || l.next == nil {
 		return nil
