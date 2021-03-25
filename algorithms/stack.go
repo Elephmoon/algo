@@ -2,30 +2,24 @@ package algorithms
 
 import "fmt"
 
-const overflowLabel = -1
-
 type stack struct {
 	top   int
 	stack []uint32
 	size  uint32
 }
 
-func NewStack(size uint32) *stack {
-	internalStack := make([]uint32, size)
+func NewStack() *stack {
 	return &stack{
-		top:   int(size),
-		stack: internalStack,
-		size:  size,
+		top:   0,
+		stack: []uint32{},
+		size:  0,
 	}
 }
 
-func (s *stack) Push(element uint32) error {
-	if s.top == overflowLabel {
-		return fmt.Errorf("stack overflow")
-	}
-	s.top--
-	s.stack[s.top] = element
-	return nil
+func (s *stack) Push(element uint32) {
+	s.top++
+	s.size++
+	s.stack = append(s.stack, element)
 }
 
 func (s *stack) Pop() (uint32, error) {
@@ -34,7 +28,14 @@ func (s *stack) Pop() (uint32, error) {
 		return 0, errMsg
 	}
 	result := s.stack[s.top]
-	s.top++
+	s.top--
+
+	if s.top > 0 {
+		_ = copy(s.stack, s.stack[:s.top])
+	} else {
+		s.stack = []uint32{}
+	}
+
 	return result, nil
 }
 

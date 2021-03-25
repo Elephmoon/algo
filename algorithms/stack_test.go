@@ -5,59 +5,6 @@ import (
 	"testing"
 )
 
-func TestStack_Push(t *testing.T) {
-	type fields struct {
-		top   int
-		stack []uint32
-		size  uint32
-	}
-	type args struct {
-		element uint32
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		wantErr bool
-	}{
-		{
-			name: "push 50",
-			fields: fields{
-				top:   2,
-				stack: make([]uint32, 2),
-				size:  2,
-			},
-			args:    args{element: 50},
-			wantErr: false,
-		},
-		{
-			name: "return error",
-			fields: fields{
-				top:   -1,
-				stack: nil,
-				size:  0,
-			},
-			args:    args{element: 1},
-			wantErr: true,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			s := &stack{
-				top:   tt.fields.top,
-				stack: tt.fields.stack,
-				size:  tt.fields.size,
-			}
-			if err := s.Push(tt.args.element); (err != nil) != tt.wantErr {
-				t.Errorf("Push() error = %v, wantErr %v", err, tt.wantErr)
-			}
-			if !tt.wantErr {
-				reflect.DeepEqual(tt.args.element, s.stack[1])
-			}
-		})
-	}
-}
-
 func TestStack_Pop(t *testing.T) {
 	type fields struct {
 		top   int
@@ -145,29 +92,55 @@ func Test_stack_IsEmpty(t *testing.T) {
 	}
 }
 
-func TestNewStack(t *testing.T) {
+func Test_stack_Push(t *testing.T) {
+	type fields struct {
+		top   int
+		stack []uint32
+		size  uint32
+	}
 	type args struct {
-		size uint32
+		element uint32
 	}
 	tests := []struct {
-		name string
-		args args
-		want *stack
+		name   string
+		fields fields
+		want   *stack
+		args   args
 	}{
 		{
-			name: "return stack",
-			args: args{size: 2},
+			name: "push 10 in empty stack",
 			want: &stack{
+				top:   1,
+				stack: []uint32{10},
+				size:  1,
+			},
+			args: args{element: 10},
+		},
+		{
+			name: "push 10 in not empty stack",
+			fields: fields{
 				top:   2,
-				stack: make([]uint32, 2),
+				stack: []uint32{1, 2, 3},
 				size:  2,
 			},
+			want: &stack{
+				top:   3,
+				stack: []uint32{1, 2, 3, 10},
+				size:  3,
+			},
+			args: args{element: 10},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewStack(tt.args.size); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewStack() = %v, want %v", got, tt.want)
+			s := &stack{
+				top:   tt.fields.top,
+				stack: tt.fields.stack,
+				size:  tt.fields.size,
+			}
+			s.Push(tt.args.element)
+			if !reflect.DeepEqual(s, tt.want) {
+				t.Errorf("Push() got = %v, want %v", s, tt.want)
 			}
 		})
 	}
