@@ -124,6 +124,36 @@ func SumNumbers(a, b *List) *List {
 	return result
 }
 
+func IsPalindrome(list *List) bool {
+	fast := list
+	slow := list
+	// this method needs the stack data structure
+	var elements []int
+	for fast != nil && fast.next != nil {
+		elements = append(elements, slow.value)
+		slow = slow.next
+		fast = fast.next.next
+	}
+
+	if fast != nil {
+		slow = slow.next
+	}
+
+	position := 0
+	for slow != nil {
+		if elements == nil {
+			return false
+		}
+		top := elements[position : position+1]
+		if slow.value != top[0] {
+			return false
+		}
+		slow = slow.next
+		position++
+	}
+	return true
+}
+
 func addZeroes(list *List, count int) *List {
 	for i := 0; i < count; i++ {
 		list.InsertBack(0)

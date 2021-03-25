@@ -616,3 +616,50 @@ func TestList_Len(t *testing.T) {
 		})
 	}
 }
+
+func TestIsPalindrome(t *testing.T) {
+	type args struct {
+		list *List
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "list is palindrome",
+			args: args{list: &List{
+				value: 1,
+				next: &List{
+					value: 2,
+					next: &List{
+						value: 1,
+						next:  nil,
+					},
+				},
+			}},
+			want: true,
+		},
+		{
+			name: "list isn't palindrome",
+			args: args{list: &List{
+				value: 1,
+				next: &List{
+					value: 2,
+					next: &List{
+						value: 3,
+						next:  nil,
+					},
+				},
+			}},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := IsPalindrome(tt.args.list); got != tt.want {
+				t.Errorf("IsPalindrome() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
