@@ -154,6 +154,34 @@ func IsPalindrome(list *List) bool {
 	return true
 }
 
+func IsPalindromeViaCustomStack(list *List) bool {
+	fast := list
+	slow := list
+	stack := NewStack()
+	for fast != nil && fast.next != nil {
+		stack.Push(uint32(slow.value))
+		slow = slow.next
+		fast = fast.next.next
+	}
+
+	if fast != nil {
+		slow = slow.next
+	}
+
+	for slow != nil {
+		top, err := stack.Pop()
+		if err != nil {
+			return false
+		}
+		if uint32(slow.value) != top {
+			return false
+		}
+		slow = slow.next
+	}
+
+	return true
+}
+
 func addZeroes(list *List, count int) *List {
 	for i := 0; i < count; i++ {
 		list.InsertBack(0)
