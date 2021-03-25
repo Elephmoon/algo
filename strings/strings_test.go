@@ -103,9 +103,14 @@ func TestIsPalindrome(t *testing.T) {
 		want bool
 	}{
 		{
-			name: "",
+			name: "strings are palindrome",
 			args: args{str: "taco cat"},
 			want: true,
+		},
+		{
+			name: "string isn't palindrome",
+			args: args{str: "abcd"},
+			want: false,
 		},
 	}
 	for _, tt := range tests {

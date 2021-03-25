@@ -56,7 +56,7 @@ func IsPalindrome(str string) bool {
 	}
 	var foundOdd bool
 	for _, u := range symbols {
-		if u%2 == 1 {
+		if u%2 >= 1 {
 			if foundOdd {
 				return false
 			}
