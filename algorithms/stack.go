@@ -5,20 +5,19 @@ import "fmt"
 type stack struct {
 	top   int
 	stack []uint32
-	size  uint32
 }
 
 func NewStack() *stack {
 	return &stack{
 		top:   0,
 		stack: []uint32{},
-		size:  0,
 	}
 }
 
 func (s *stack) Push(element uint32) {
-	s.top++
-	s.size++
+	if len(s.stack) != 0 {
+		s.top++
+	}
 	s.stack = append(s.stack, element)
 }
 
@@ -40,5 +39,5 @@ func (s *stack) Pop() (uint32, error) {
 }
 
 func (s *stack) IsEmpty() bool {
-	return uint32(s.top) == s.size
+	return len(s.stack) == 0
 }
